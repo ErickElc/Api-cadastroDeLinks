@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Links</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            background-color: black;
+        }
+        .card{
+            background-color: blanchedalmond;
+            border: gray 1px solid;
+            margin: 10px;
+        }
+        #MudarPagina{
+            background-color: aqua;
+            padding: 10px;
+            margin-bottom: 100px;
+        }
+        .container{
+            text-align: center;
+            flex-flow: column;
+        }
+        .listaDeLinks{
+            margin-top: 50px;
+        }
+        #titulo{
+            margin-bottom: 30px;
+        }
+        #button{
+            padding: 10px;
+            background-color: burlywood;
+            color: black;
+            border: 0px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        #button:hover{
+            background-color: rgb(190, 157, 113);
+        }
+        #button:active{
+            background-color: rgb(148, 121, 87);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="color: white;" id="titulo">Olá</h1>
+        <a href="/cadastrar" id="MudarPagina">click aqui para cadastrar</a>
+        <div class="listaDeLinks">
+            <% for(let i = 0; i < links.length; i++){%>
+                <div id="<%=links[i].id%>" class="card">
+                    <h1><%=links[i].title%></h1>
+                    <p><%=links[i].description%></p>
+                    <p><a href="http://localhost:3000/buscar/<%=links[i].title%>"><%=links[i].url%></a></h1>
+                    <p><%=links[i].clicks%></p>
+                    <button onclick="deleteLink('<%=links[i].id%>')" id="button">Deletar</button>
+                    <a href="/edit/<%=links[i].id%>" id="MudarPagina">click aqui para editar</a>
+                </div>
+            <%}%>
+        </div>
+    </div>
+    <script>
+        function deleteLink(id){
+            fetch('/' + id ,{
+                method: "DELETE"
+            }).then(res =>{
+                if(res.status == 200){
+                    res.text().then(linkId =>{
+                     console.log(linkId)
+                     document.getElementById(linkId).remove();
+                    })
+                }
+                else{
+                    res.json().then(err => {
+                        alert(err.message)
+                    })
+                }
+            })
+        }
+    </script>
+</body>
+</html>

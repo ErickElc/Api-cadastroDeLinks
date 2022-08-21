@@ -1,0 +1,8 @@
+body{
+    background-color: black;
+}
+.card{
+    background-color: blanchedalmond;
+    border: gray 1px solid;
+    margin: 10px;
+}
